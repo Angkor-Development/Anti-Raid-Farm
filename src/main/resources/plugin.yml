@@ -1,0 +1,4 @@
+name: AntiRaidFarm
+version: '${project.version}'
+main: me.thunthean.AntiRaidFarm
+api-version: '1.17'
