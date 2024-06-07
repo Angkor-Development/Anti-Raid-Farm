@@ -25,6 +25,8 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
         // Initialize the logger
         logger = this.getLogger();
 
+        long time = System.currentTimeMillis();
+
         // Save the default configuration file if it does not exist
         this.saveDefaultConfig();
 
@@ -42,8 +44,11 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
         // Register the event listener
         this.getServer().getPluginManager().registerEvents(this, this);
 
+        long duration = System.currentTimeMillis() - time;
+
         // Log plugin enablement
-    logger.info("AntiRaidFarm plugin by " + ChatColor.DARK_RED + "thunthean" + ChatColor.WHITE + " enabled with a raid cooldown of " + raidCooldownSeconds + " seconds.");
+        logger.info("is Enabled took " + duration + "ms");
+        logger.info("AntiRaidFarm plugin by " + ChatColor.DARK_RED + "thunthean" + ChatColor.WHITE + " with a raid cooldown of " + raidCooldownSeconds + " seconds.");
 
     }
 
@@ -70,6 +75,7 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        getLogger().info("This plugin is disabled!!");
     }
 
 }
