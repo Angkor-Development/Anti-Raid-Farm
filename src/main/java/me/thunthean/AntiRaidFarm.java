@@ -2,6 +2,7 @@ package me.thunthean;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,19 +14,37 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import static me.thunthean.Ults.Checks.CheckPaperServer;
+import static me.thunthean.Ults.Checks.isVersionInRange;
+
+
 public final class AntiRaidFarm extends JavaPlugin implements Listener {
 
     private Cache<UUID, Long> lastRaidCache;
     private static final String RAID_COOLDOWN_CONFIG = "raid-cooldown-seconds";
     private static final String BYPASS_PERMISSION = "antiraidfarm.bypass";
     private Logger logger;
+    private static final String MIN_VERSION = "1.17.1";
+    private static final String MAX_VERSION = "1.20.1";
 
     @Override
     public void onEnable() {
         // Initialize the logger
         logger = this.getLogger();
 
+        //Check Server Version
+        String serverVersion = Bukkit.getBukkitVersion().split("-")[0];
+        if (isVersionInRange(serverVersion, MIN_VERSION, MAX_VERSION)) {
+            getLogger().info("Plugin enabled successfully. Server version: " + serverVersion);
+        } else {
+            getLogger().warning("Plugin disabled. Server version " + serverVersion + " is not within the supported range (" + MIN_VERSION + " to " + MAX_VERSION + ").");
+            getServer().getPluginManager().disablePlugin(this);
+        }
+
         long time = System.currentTimeMillis();
+
+        //Check Paper Server
+        CheckPaperServer();
 
         // Save the default configuration file if it does not exist
         this.saveDefaultConfig();
