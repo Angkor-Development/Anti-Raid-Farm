@@ -2,3 +2,8 @@ name: AntiRaidFarm
 version: '${project.version}'
 main: me.thunthean.AntiRaidFarm
 api-version: '1.17'
+commands:
+  antiraidfarm:
+    aliases:
+      - anf
+    description: A antiraidfarm main command

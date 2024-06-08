@@ -2,6 +2,8 @@ package me.thunthean;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import me.thunthean.Commands.MainCMD;
+import me.thunthean.Ults.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -20,17 +22,22 @@ import static me.thunthean.Ults.Checks.isVersionInRange;
 
 public final class AntiRaidFarm extends JavaPlugin implements Listener {
 
+    public static AntiRaidFarm instane;
+    public static String PREFIX = Color.ColorMessage("&7[&cAntiRaidFarm&7] >&f");
     private Cache<UUID, Long> lastRaidCache;
     private static final String RAID_COOLDOWN_CONFIG = "raid-cooldown-seconds";
     private static final String BYPASS_PERMISSION = "antiraidfarm.bypass";
     private Logger logger;
     private static final String MIN_VERSION = "1.17.1";
     private static final String MAX_VERSION = "1.20.1";
+    public boolean raid = true;
 
     @Override
     public void onEnable() {
         // Initialize the logger
         logger = this.getLogger();
+
+        instane = this;
 
         //Check Server Version
         String serverVersion = Bukkit.getBukkitVersion().split("-")[0];
@@ -60,6 +67,9 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
                 .expireAfterWrite(raidCooldownSeconds, TimeUnit.SECONDS)
                 .build();
 
+        //Register Commands
+        getCommand("antiraidfarm").setExecutor(new MainCMD());
+
         // Register the event listener
         this.getServer().getPluginManager().registerEvents(this, this);
 
@@ -69,6 +79,10 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
         logger.info("is Enabled took " + duration + "ms");
         logger.info("AntiRaidFarm plugin by " + ChatColor.DARK_RED + "thunthean" + ChatColor.WHITE + " with a raid cooldown of " + raidCooldownSeconds + " seconds.");
 
+    }
+
+    public static AntiRaidFarm getInstance() {
+        return instane;
     }
 
     @EventHandler
@@ -81,13 +95,15 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
             return;
         }
 
-        // Check if the player has triggered a raid within the cooldown period
-        if (this.lastRaidCache.getIfPresent(player.getUniqueId()) != null) {
-            event.setCancelled(true);
-            logger.info("Raid triggered by player " + player.getName() + " blocked due to cooldown.");
-        } else {
-            this.lastRaidCache.put(player.getUniqueId(), System.currentTimeMillis());
-            logger.info("Raid triggered by player " + player.getName() + " allowed. Cooldown started.");
+        if(raid) {
+            // Check if the player has triggered a raid within the cooldown period
+            if (this.lastRaidCache.getIfPresent(player.getUniqueId()) != null) {
+                event.setCancelled(true);
+                logger.info("Raid triggered by player " + player.getName() + " blocked due to cooldown.");
+            } else {
+                this.lastRaidCache.put(player.getUniqueId(), System.currentTimeMillis());
+                logger.info("Raid triggered by player " + player.getName() + " allowed. Cooldown started.");
+            }
         }
     }
 
