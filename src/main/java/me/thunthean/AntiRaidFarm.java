@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static me.thunthean.Ults.Checks.CheckPaperServer;
-import static me.thunthean.Ults.Checks.isVersionInRange;
 
 
 public final class AntiRaidFarm extends JavaPlugin implements Listener {
@@ -38,15 +37,6 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
         logger = this.getLogger();
 
         instane = this;
-
-        //Check Server Version
-        String serverVersion = Bukkit.getBukkitVersion().split("-")[0];
-        if (isVersionInRange(serverVersion, MIN_VERSION, MAX_VERSION)) {
-            getLogger().info("Plugin enabled successfully. Server version: " + serverVersion);
-        } else {
-            getLogger().warning("Plugin disabled. Server version " + serverVersion + " is not within the supported range (" + MIN_VERSION + " to " + MAX_VERSION + ").");
-            getServer().getPluginManager().disablePlugin(this);
-        }
 
         long time = System.currentTimeMillis();
 
