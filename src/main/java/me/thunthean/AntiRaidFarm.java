@@ -27,8 +27,6 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
     private static final String RAID_COOLDOWN_CONFIG = "raid-cooldown-seconds";
     private static final String BYPASS_PERMISSION = "antiraidfarm.bypass";
     private Logger logger;
-    private static final String MIN_VERSION = "1.17.1";
-    private static final String MAX_VERSION = "1.20.1";
     public boolean raid = true;
 
     @Override
