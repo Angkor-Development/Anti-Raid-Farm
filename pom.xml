@@ -6,7 +6,7 @@
 
     <groupId>me.thunthean</groupId>
     <artifactId>AntiRaidFarm</artifactId>
-    <version>1.0-Dev</version>
+    <version>1.1-Dev</version>
     <packaging>jar</packaging>
 
     <name>AntiRaidFarm</name>

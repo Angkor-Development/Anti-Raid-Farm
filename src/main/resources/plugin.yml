@@ -7,7 +7,8 @@ commands:
     aliases:
       - anf
     description: A antiraidfarm main command
-  raid-remain:
+  raidremain:
     aliases:
       - rem
+      - raid-remain
   description: A antiraidfarm command that check for your raid remaining

@@ -58,7 +58,7 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
 
         //Register Commands
         getCommand("antiraidfarm").setExecutor(new MainCMD());
-        getCommand("raid-remain").setExecutor(new RaidCMD());
+        getCommand("raidremain").setExecutor(new RaidCMD());
 
         // Register the event listener
         this.getServer().getPluginManager().registerEvents(this, this);
