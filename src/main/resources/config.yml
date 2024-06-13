@@ -1,3 +1,4 @@
 # How many seconds must a player wait between starting raids
-# Give the permission `antiraidfarm.bypass` to players you wish to bypass this
+# You can also use "antiraidfarm.bypass" perm to bypass this prevention
+# By Default raid will put to 180 seconds = 3 minutes
 raid-cooldown-seconds: 180

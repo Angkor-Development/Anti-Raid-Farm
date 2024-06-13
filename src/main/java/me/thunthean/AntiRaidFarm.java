@@ -3,6 +3,7 @@ package me.thunthean;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import me.thunthean.Commands.MainCMD;
+import me.thunthean.Commands.RaidCMD;
 import me.thunthean.Ults.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -59,6 +60,7 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
 
         //Register Commands
         getCommand("antiraidfarm").setExecutor(new MainCMD());
+        getCommand("raid-remain").setExecutor(new RaidCMD());
 
         // Register the event listener
         this.getServer().getPluginManager().registerEvents(this, this);
@@ -95,6 +97,10 @@ public final class AntiRaidFarm extends JavaPlugin implements Listener {
                 logger.info("Raid triggered by player " + player.getName() + " allowed. Cooldown started.");
             }
         }
+    }
+
+    public Cache<UUID, Long> getLastRaidCache() {
+        return lastRaidCache;
     }
 
     @Override
